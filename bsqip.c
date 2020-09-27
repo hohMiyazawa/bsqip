@@ -11,6 +11,14 @@ void printUsage(){
 	printf("-m int  Shape primitive. 0=triangles (default), 1=rectangles, 2=circles\n");
 }
 
+int encode(int colourType,int shapeType,bool hasC,bool hasM,char *infile,char *outfile){
+	return 3;
+}
+
+int decode(char *infile,char *outfile){
+	return 3;
+}
+
 int main(int argc,char *argv[]){
 	for(int i=0;i<argc;i++){
 		printf("argv[%2d]: %s\n",i,argv[i]);
@@ -94,6 +102,23 @@ int main(int argc,char *argv[]){
 			return 2;
 		}
 	}
-	
-	return 0;
+	if(!(hasI && hasO)){
+		printUsage();
+		return 2;
+	}
+	if(hasE){
+		return encode(colourType,shapeType,hasC,hasM,infile,outfile);
+	}
+	else{
+		return decode(infile,outfile);
+	}
 }
+/* return values
+0: success
+1: useful failure pattern ("print help")
+2: wrong arguments
+3: unimplemented functionallity
+4: IO failure
+5: input does not conform to syntax
+6: unexpeted failure
+*/
