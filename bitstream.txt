@@ -1,0 +1,28 @@
+Header:
+	unsigned 2 byte integer, image width - 1.
+	unsigned 2 byte integer, image height - 1.
+	4 bits, reserved.
+	2 bits, SVG shape format. 00=triangles, 01=rectangles, 10=circles
+	2 bits, colour format. 00=8bit greyscale, 01=8bit colour, 10=16bit truecolour, 11=24bit rgb
+	unsigned 1 byte integer, shape opacity, as 256ths - 1.
+	background colour, either 1, 2 or 3 bytes depending on colour format
+
+Every group of bytes after that:
+	shape colour: 1, 2 or 3 bytes depending on colour format
+	shape coordinates: 3, 4 or 6 bytes depending on shape
+
+Triangles:
+	uses an image scaled to 128.
+	every triangle coordinates is a 1 byte signed integer
+	(x1,y1)(x2,y2)(x3,y3)
+
+Rectangles:
+	uses an image scaled to 256
+	every rectangle coordnate is a 1 byte unsigned integer
+	x,y,width,height
+	(width and height are represented as their values - 1)
+
+Circles:
+	uses an image scaled to 256
+	every circle coordinate is a 1 byte unsigned integer
+	x,y,r
