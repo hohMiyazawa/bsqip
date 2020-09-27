@@ -1,0 +1,41 @@
+There are a number of things you should try *before* using bsqip, as they give greater returns.
+bsqip is just squeezing the last couple of drops from the lemon.
+
+1. Optimise your images:
+ - Are you using lossy/lossless image correctly?
+ - Do you deliver the right size of images?
+ - Do you use a good encoder? (https://github.com/mozilla/mozjpeg)
+ - Do you use a good recompressor (see mozjpeg too, it's jpegtran tool)
+ - Do you use progressive encoding? (mozjpeg does by default)
+ - Have you considered other image formats? (WebP, AVIF)
+
+2. Make really really sure your cacheing is working properly, and that your server supports compression.
+
+3. Optimise your page.
+  bsqip saves *at most* a couple of thousand bytes over other *qip solutions.
+  If there's anywhere you else you can shave off some size, that's probably where you should focus your efforts first.
+
+---
+
+Anyway, here's how it compare to other *QIP techniques
+
+LQIP is pretty simple. You just embed a base64 encoded low size JPG into your page as a placeholder.
+
+SQIP does the same, but instead of using JPG, it makes an approximation based on primitive SVG shapes.
+
+In both cases, people sometimes blur the result to hide artefacts.
+
+If you don't think SQIP looks better than LQIP, BSQIP is not for you.
+
+---
+
+BSQIP goes one step further than SQIP, storing the SVG in a more compact binary format. This allows either:
+ - Smaller QIP images
+ - More polygons at equal file size.
+
+Unlike SQIP, BSQIP needs a decoder. Ideally this should be part of your well-cached javascript, adding ~1kB gziped to it as a one time cost.
+
+You *can* deliver a BSQIP decoder as part of your page markup too, but that's going to cost you approximately 600 bytes per pageload using one of the decoders in the "specialised/" directory.
+For one image, this only barely beats even, but for multiple images it could still be worthwhile.
+
+See "demo/demo.html" for an actual worked example
