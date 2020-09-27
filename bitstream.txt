@@ -13,7 +13,7 @@ Every group of bytes after that:
 
 Triangles:
 	uses an image scaled to 128.
-	every triangle coordinates is a 1 byte signed integer
+	every triangle coordinates is a 1 byte integer - 127
 	(x1,y1)(x2,y2)(x3,y3)
 
 Rectangles:
