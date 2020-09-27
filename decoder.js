@@ -31,11 +31,12 @@ function bsqip_decode(byteArray){
 		}
 	}
 	let lines = [];
+	let background = bytesToRGB(byteArray.slice(6,6 + colourLength));
 	if(shapeFormat === 0){
 		let lineLength = 6 + colourLength;
-		for(let i = 5 + colourLength;i + lineLength < byteArray.length;i += lineLength){
+		for(let i = 6 + colourLength;i + lineLength < byteArray.length;i += lineLength){
 			let colour = bytesToRGB(byteArray.slice(i,i + colourLength));
-			lines.push(`<polygon fill="${colour}" fill-opacity="${opacity}" points="${byteArray[i + colourLength] - 127},${byteArray[i + colourLength + 1] - 127} ${byteArray[i + colourLength + 2] - 127},${byteArray[i + colourLength + 3] - 127} ${byteArray[i + colourLength + 4] - 127},${byteArray[i + colourLength + 5] - 127}" />`)
+			lines.push(`<polygon fill="${colour}" fill-opacity="${opacity}" points="${byteArray[i + colourLength] - 63},${byteArray[i + colourLength + 1] - 63} ${byteArray[i + colourLength + 2] - 63},${byteArray[i + colourLength + 3] - 63} ${byteArray[i + colourLength + 4] - 63},${byteArray[i + colourLength + 5] - 63}" />`)
 		}
 	}
 	else if(shapeFormat === 1){
@@ -43,7 +44,7 @@ function bsqip_decode(byteArray){
 	else if(shapeFormat === 2){
 	}
 	return `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${width}" height="${height}">
-<rect x="0" y="0" width="${width}" height="${height}" fill="#5d8898" />
+<rect x="0" y="0" width="${width}" height="${height}" fill="${background}" />
 <g transform="scale(${shapeFormat ? width/256 : width/128}) translate(0.5 0.5)">
 ${lines.join("\n")}
 </g>

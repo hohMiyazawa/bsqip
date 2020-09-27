@@ -59,14 +59,66 @@ textarea{
 				<input type="file" name="svg" accept="image/svg+xml">
 				<p>Drop an SVG file here or click to upload</p>
 			</div>
-			<textarea placeholder="or paste SVG here"></textarea>
-		</div>
+			<textarea id="textInput" placeholder="or paste SVG here"></textarea><br>
+			<input type="radio" id="8bit" name="colour" value="8bit">
+			<label for="8bit">8-bit</label>
+			<input type="radio" id="16bit" name="colour" value="16bit" checked>
+			<label for="16bit">16-bit</label>
+			<input type="radio" id="rgb" name="colour" value="rgb">
+			<label for="rgb">RGB</label>
+			<input type="radio" id="grey" name="colour" value="grey">
+			<label for="grey">grey</label>
+		</div><br><br>
 		<div class="container dropzone">
 			<h2>bsqip input</h2>
 			<div class="dropbox">
-				<input type="file" name="bsqip">
+				<input type="file" name="bsqip" id="bsqip_input">
 				<p>Drop a bsqip file here or click to upload</p>
 			</div>
 		</div>
+		<div id="preview"></div>
+		<script>
+let saveByteArray = (function(){
+	let a = document.createElement("a");
+	document.body.appendChild(a);
+	a.style = "display: none";
+	return function(data,name){
+		let blob = new Blob(data, {type: "octet/stream"});
+		let url = window.URL.createObjectURL(blob);
+		a.href = url;
+		a.download = name;
+		a.click();
+		window.URL.revokeObjectURL(url)
+	}
+}())
+
+let textInput = document.getElementById("textInput");
+textInput.oninput = function(){
+	saveByteArray([Uint8Array.from(bsqip_encode(
+		textInput.value,
+		{
+			colour: document.querySelector('input[name="colour"]:checked').value,
+			shape: "triangles"
+		}
+	))],"image.bsqip")
+}
+
+const inputElementEncode = document.getElementById("bsqip_input");
+
+let html_encode = function(){
+	if(inputElementEncode.files && inputElementEncode.files[0]){
+		let fileName = inputElementEncode.files[0].name;
+		let FR = new FileReader();
+		FR.onload = function(e){
+			let bytes = Array.from(new Uint8Array(FR.result))
+			let SVG = bsqip_decode(bytes);
+			console.log(SVG);
+			document.getElementById("preview").innerHTML = SVG;
+		};       
+		FR.readAsArrayBuffer(inputElementEncode.files[0]);
+	}
+}
+inputElementEncode.addEventListener("change",html_encode,false);
+		</script>
 	</body>
 </html>
