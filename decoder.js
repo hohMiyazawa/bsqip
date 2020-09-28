@@ -34,7 +34,7 @@ function bsqip_decode(byteArray){
 	let background = bytesToRGB(byteArray.slice(6,6 + colourLength));
 	if(shapeFormat === 0){
 		let lineLength = 6 + colourLength;
-		for(let i = 6 + colourLength;i + lineLength < byteArray.length;i += lineLength){
+		for(let i = 6 + colourLength;i + lineLength <= byteArray.length;i += lineLength){
 			let colour = bytesToRGB(byteArray.slice(i,i + colourLength));
 			lines.push(`<polygon fill="${colour}" fill-opacity="${opacity}" points="${byteArray[i + colourLength] - 63},${byteArray[i + colourLength + 1] - 63} ${byteArray[i + colourLength + 2] - 63},${byteArray[i + colourLength + 3] - 63} ${byteArray[i + colourLength + 4] - 63},${byteArray[i + colourLength + 5] - 63}" />`)
 		}
