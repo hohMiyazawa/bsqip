@@ -5,7 +5,7 @@ bsqip is just squeezing the last couple of drops from the lemon.
  - Are you using lossy/lossless image correctly?
  - Do you deliver the right size of images?
  - Do you use a good encoder? (https://github.com/mozilla/mozjpeg)
- - Do you use a good recompressor (see mozjpeg too, it's jpegtran tool)
+ - Do you use a good recompressor (see mozjpeg too, its jpegtran tool)
  - Do you use progressive encoding? (mozjpeg does by default)
  - Have you considered other image formats? (WebP, AVIF)
 
@@ -14,6 +14,8 @@ bsqip is just squeezing the last couple of drops from the lemon.
 3. Optimise your page.
   bsqip saves *at most* a couple of thousand bytes over other *qip solutions.
   If there's anywhere you else you can shave off some size, that's probably where you should focus your efforts first.
+
+4. Try any kind of optimisation that applies *before* javascript-based solutions. (see for instance HTTP/2)
 
 ---
 

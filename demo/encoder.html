@@ -33,6 +33,7 @@
 			</div>
 		</div>
 		<div id="preview"></div>
+		<canvas id="previewCanvas"><canvas>
 		<script>
 let saveByteArray = (function(){
 	let a = document.createElement("a");
@@ -70,6 +71,19 @@ let html_encode = function(){
 			let SVG = bsqip_decode(bytes);
 			console.log(SVG);
 			document.getElementById("preview").innerHTML = SVG;
+			let svg = document.querySelector('svg');
+			let xml = new XMLSerializer().serializeToString(svg);
+			let svg64 = btoa(xml);
+			let b64Start = 'data:image/svg+xml;base64,';
+			let image64 = b64Start + svg64;
+			let img = new Image();
+			img.addEventListener("load", function(){
+				let canvas = document.getElementById("previewCanvas");
+				canvas.width = img.width;
+				canvas.height = img.height;
+				canvas.getContext('2d').drawImage(img, 0, 0);
+			})
+			img.src = image64;
 		};       
 		FR.readAsArrayBuffer(inputElementEncode.files[0]);
 	}

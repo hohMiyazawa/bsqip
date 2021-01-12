@@ -52,7 +52,7 @@ function bsqip_encode(SVG,options){
 			if(lineMatch){
 				bsqip.push(...hexToBytes(lineMatch[1]));
 				lineMatch[2].split(" ").flatMap(pair => pair.split(",")).forEach(num => {
-					bsqip.push(parseInt(num) + 63)
+					bsqip.push(parseInt(num) + 64)
 				})
 			}
 			else{
