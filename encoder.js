@@ -39,7 +39,10 @@ function bsqip_encode(SVG,options){
 			return [(reduced_R << 3) + (reduced_G >> 3),((reduced_G << 5) % 256) + reduced_B]
 		}
 		else if(options.colour === "8bit"){
-			//TODO
+			let reduced_R = Math.round(R/(255/7));
+			let reduced_G = Math.round(G/(255/7));
+			let reduced_B = Math.round(B/(255/3));
+			return [(reduced_R << 5) + (reduced_G << 2) + reduced_B]
 		}
 		else{
 			return [Math.round((R+G+B)/3)]
